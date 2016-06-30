@@ -1,0 +1,18 @@
+body,
+textarea {
+    font: 1em/1.2 sans-serif;
+}
+
+.comment-panel {
+    max-width: 20em;
+    margin: 0 auto;
+}
+
+.comment-label {
+    display: block;
+}
+
+.comment-textarea {
+    width: 18em;
+    min-height: 4em;
+}

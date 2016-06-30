@@ -1,9 +1,15 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title></title>
+        <title>Autocomplete sample</title>
+        <link href="main.css" rel="stylesheet">
     </head>
     <body>
-        Hello world!
+        <div class="comment-panel">
+            <form method="POST" action="/comments">
+                <label class="comment-label" for="comment">Comment</label>
+                <textarea class="comment-textarea" id="comment" name="comment"></textarea>
+            </form>
+        </div>
     </body>
 </html>
