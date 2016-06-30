@@ -1,0 +1,15 @@
+{
+  "name": "autocomplete",
+  "version": "1.0.0",
+  "description": "Sample autocomplete interactions",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test",
+    "start": "node node_modules/.bin/http-server -o"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "http-server": "^0.9.0"
+  }
+}
