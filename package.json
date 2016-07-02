@@ -11,5 +11,10 @@
   "license": "ISC",
   "dependencies": {
     "http-server": "^0.9.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cucumber": "0.0.21",
+    "zombie": "^4.2.1"
   }
 }
