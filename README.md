@@ -6,7 +6,7 @@ Requires Node v4.0.0 or greater
 
 `npm install`
 
-`npm start`
+`npm start` - this will open a new browser tab to the index page 
 
 ## Testing
 
