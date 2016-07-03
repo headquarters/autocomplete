@@ -2,6 +2,8 @@
 
 ## Run the project
 
+Requires Node v4.0.0 or greater
+
 `npm install`
 
 `npm start`
