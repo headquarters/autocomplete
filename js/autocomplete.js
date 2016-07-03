@@ -3,8 +3,16 @@ var APP = {};
 APP.keys = '';
 APP.fetchData = new XMLHttpRequest();
 APP.names; 
-APP.legalNameChars = 'abcdefghijklmnopqrstuvwxyz';
+APP.legalCharsMin = 65;
+APP.legalCharsMax = 90;
 APP.domElement;
+
+APP.keyCodes = {
+    'backspace': 8,
+    'space': 32,
+    'enter': 13,
+    'delete': 46
+}
 
 /**
  * Initialize the application for the page, fetching data for the usernames
@@ -50,11 +58,11 @@ APP.setupEvents = function (element) {
  * @param {Event} keyup event
  */
 APP.checkKeys = function (event) {
-    var keyPressed = event.key.toLowerCase();
+    var keyPressed = event.which;
     var matches;
 
-    if (APP.legalNameChars.indexOf(keyPressed) > -1) {
-        APP.keys = APP.keys + keyPressed;
+    if (keyPressed <= APP.legalCharsMax && keyPressed >= APP.legalCharsMin) {
+        APP.keys = APP.keys + String.fromCharCode(keyPressed).toLowerCase();
 
         if (APP.keys.length > 1) {
             matches = APP.matchNames();
@@ -67,17 +75,17 @@ APP.checkKeys = function (event) {
         }    
     }
 
-    if (keyPressed === 'backspace') {
+    if (keyPressed === APP.keyCodes.backspace) {
         APP.keys = APP.keys.slice(0, -1);
 
         if (APP.keys.length < 1) {
             APP.removeResults();
         }
-    } else if (keyPressed === ' ') {
+    } else if (keyPressed === APP.keyCodes.space) {
         // reset tracking on space; this could potentially cause issues for users with spaces in their first name
         APP.keys = '';
         APP.removeResults();
-    } else if (keyPressed === 'delete') {
+    } else if (keyPressed === APP.keyCodes.delete) {
         APP.removeResults();
     }
 };
@@ -145,7 +153,7 @@ APP.appendResults = function (matches) {
 
 APP.selectName = function (event) {
     if (event.target.className !== 'autocomplete-names--name' ||
-        event.key.toLowerCase() !== 'enter') {
+        event.which !== APP.keyCodes.enter) {
         return;
     }
 

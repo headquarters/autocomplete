@@ -24,12 +24,12 @@ module.exports = function () {
     this.browser.fill('.comment-textarea', 'Pa'); // does not fire 'keyUp' event
     this.browser.assert.hasFocus('.comment-textarea');
     
-    dispatchKeyUp('P', target);
-    dispatchKeyUp('a', target);  
+    dispatchKeyUp(80, target); // 'P'
+    dispatchKeyUp(65, target); // 'a'
 
     function dispatchKeyUp (char, target) {
       event.initEvent('keyup', true, true);
-      event.key = char;
+      event.which = char;
       target && target.dispatchEvent(event);
     }    
 
