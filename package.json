@@ -4,7 +4,7 @@
   "description": "Sample autocomplete interactions",
   "main": "index.js",
   "scripts": {
-    "test": "npm test",
+    "test": "gulp cucumber",
     "start": "node node_modules/.bin/http-server -o"
   },
   "author": "",

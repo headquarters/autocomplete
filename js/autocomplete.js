@@ -6,6 +6,9 @@ APP.names;
 APP.legalNameChars = 'abcdefghijklmnopqrstuvwxyz';
 APP.domElement;
 
+/**
+ * Initialize the application for the page, fetching data for the usernames
+ */
 APP.init = function () {    
     var fetchData = this.fetchData;
 
@@ -38,6 +41,8 @@ APP.fetchFailed = function (event) {
 APP.setupEvents = function (element) {
     // TODO: may need some means of throttling/debouncing
     element.addEventListener('keyup', this.checkKeys);
+
+    document.body.addEventListener('keyup', this.selectName);
 };
 
 /**
@@ -54,8 +59,12 @@ APP.checkKeys = function (event) {
         if (APP.keys.length > 1) {
             matches = APP.matchNames();
 
-            APP.appendResults(matches);
-        }
+            if (matches.length < 1) {
+                APP.removeResults();
+            } else {
+                APP.appendResults(matches);
+            }
+        }    
     }
 
     if (keyPressed === 'backspace') {
@@ -64,7 +73,7 @@ APP.checkKeys = function (event) {
         if (APP.keys.length < 1) {
             APP.removeResults();
         }
-    } else if (keyPressed === 'space') {
+    } else if (keyPressed === ' ') {
         // reset tracking on space; this could potentially cause issues for users with spaces in their first name
         APP.keys = '';
         APP.removeResults();
@@ -89,6 +98,9 @@ APP.matchNames = function () {
     return matchingNames.slice(0, 5);
 };
 
+/**
+ * @return {Number} 
+ */
 APP.getCursorVerticalOffset = function () {
     var lineBreaks = APP.domElement.value.match(/[\r|\n]/g);
 
@@ -101,17 +113,13 @@ APP.getCursorVerticalOffset = function () {
 
 APP.removeResults = function () {
     var list = document.getElementsByClassName('autocomplete-names')[0];
-
-    list.remove();
+    if (list) {
+        list.remove();
+    }    
 }
 
 APP.appendResults = function (matches) {
-    if (!matches) {
-        APP.removeResults();
-        return;
-    }
-
-console.log('matches', matches);
+    APP.removeResults();
 
     var fragment = document.createDocumentFragment();
     var list = document.createElement('ul');
@@ -133,6 +141,25 @@ console.log('matches', matches);
     }
 
     APP.domElement.parentElement.appendChild(fragment);   
+};
+
+APP.selectName = function (event) {
+    if (event.target.className !== 'autocomplete-names--name' ||
+        event.key.toLowerCase() !== 'enter') {
+        return;
+    }
+
+    var text = APP.domElement.value;
+    var textArray = text.split(' ').slice(0, -1); // chop off last type text after a space
+
+    // replace with the selected target
+    textArray.push(event.target.innerText);
+   
+    APP.domElement.value = textArray.join(' ');
+
+    APP.removeResults();
+
+    APP.domElement.focus();
 };
 
 APP.init();
