@@ -105,9 +105,9 @@ APP.getCursorVerticalOffset = function () {
     var lineBreaks = APP.domElement.value.match(/[\r|\n]/g);
 
     if (!lineBreaks) {
-        return 3;
+        return 3.2;
     } else {
-        return 3 + lineBreaks.length;
+        return 3.2 + lineBreaks.length;
     }
 };
 
